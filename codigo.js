@@ -37,7 +37,7 @@ while (salir!="Q" && salir!="q") {
             alert ("El precio de la remera es de $1900");
             break;
         case "M":
-            alert ("El precio de la remera es de $2400");
+            alert ("El precio de la remera es de $2500");
             break;
         case "L":
             alert ("El precio de la remera es de $2900");
