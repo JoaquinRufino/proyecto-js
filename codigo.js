@@ -3,7 +3,7 @@ let talle =  prompt ("¿Cuál es tu talle (S , M, L , XL)?").toUpperCase();
 
 let texto = "Hola " + nombre + " ingresaste correctamente tus datos!! \n" + "\n" + "Continue con el proceso!!";
 
-if ((nombre != "") && (talle != "")) {
+if ((nombre != "") && (talle == " S, M, L, XL")) {
     alert(texto);
 } else {
     alert("Por favor, ingrese su nombre y talle");
@@ -53,4 +53,40 @@ while (salir!="Q" && salir!="q") {
     salir= prompt ("Ingrese otro talle y le indicare su precio (Q para salir)").toUpperCase();
 }
 
+let remera = prompt ("Ingrese el nombre de la remera que desea comprar (Ropa 1, Ropa 2, Ropa 3, Ropa 4)").toLowerCase();
 
+const PrendaDisponible = [
+    {
+        nombre:"ropa 1",
+        precio: "$1900",
+        talle: "S",
+    },
+    {
+        nombre:"ropa 2",
+        precio: " $2500",
+        talle: "M",
+    },
+    {
+        nombre:"ropa 3",
+        precio: "$2900 ",
+        talle: "L",
+    },
+    {
+        nombre:"ropa 4",
+        precio: "$2400",
+        talle: "XL",
+    }
+];
+
+const StockDisponible = PrendaDisponible.some((ropa) => ropa.nombre === remera.toLowerCase());
+
+if (StockDisponible == true) {
+    alert("Tenemos stock de la remera que elegiste");
+} else {
+    alert("Ingresaste una remera que no tenemos en stock");
+    
+}
+
+PrendaDisponible.push ({nombre: "Proximamente", precio: "$4000", talle: "XXL"});
+
+console.log(PrendaDisponible);
