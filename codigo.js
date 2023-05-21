@@ -4,7 +4,8 @@ let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 let contenedor = document.getElementById("sectionropa");
 
 let totalCarrito;
-let botonFinalizar = document.getElementById("finalizar"); 
+
+
 
 function renderizarProductos() {
     for (const ropa of prendas) {
@@ -21,15 +22,16 @@ function renderizarProductos() {
     prendas.forEach(ropa => {
         document.getElementById(`${ropa.id}`).addEventListener("click", function (){
         agregarAlCarrito(ropa);
-    });
-})
+        });
+});
 }
+
 
 renderizarProductos();
 
+
 function agregarAlCarrito(ropaComprada){
     carrito.push(ropaComprada);
-    
     Swal.fire({
         title:'Prenda agregada al Carrito!!',
         text: ropaComprada.titulo,
@@ -67,7 +69,7 @@ const renderizarCarrito = () =>{
 renderizarCarrito();
 
 
-
+let botonFinalizar = document.getElementById("finalizar");
 //boton para finalizar compra
 botonFinalizar.onclick = () =>{
     if(carrito.length==0){
