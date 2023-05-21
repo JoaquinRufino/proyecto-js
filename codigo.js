@@ -1,92 +1,118 @@
-let nombre = prompt("¿Cuál es tu nombre?");
-let talle =  prompt ("¿Cuál es tu talle (S , M, L , XL)?").toUpperCase();
-
-let texto = "Hola " + nombre + " ingresaste correctamente tus datos!! \n" + "\n" + "Continue con el proceso!!";
-
-if ((nombre != "") && (talle == " S, M, L, XL")) {
-    alert(texto);
-} else {
-    alert("Por favor, ingrese su nombre y talle");
-}
 
 
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+let contenedor = document.getElementById("sectionropa");
 
-function stock () {
-    if (talle == "S") {
-        alert ("Tenemos stock de talle S, averigüe el precio!!");
-    } else if (talle == "M") {
-        alert ("Tenemos stock de talle M, averigüe el precio!!");
-    } else if (talle == "L") {
-        alert ("Por el momento no tenemos stock de talle L, pero puede elegir otro talle");
-    } else if (talle == "XL") {
-        alert ("Tenemos stock de talle XL, averigüe el precio!!");
-    } else {
-        alert ("Ingrese un talle válido, recuerda escribirlo en mayúscula");
+let totalCarrito;
+let botonFinalizar = document.getElementById("finalizar"); 
+
+function renderizarProductos() {
+    for (const ropa of prendas) {
+        contenedor.innerHTML += `
+        <article class="article-ropa2 card" style=${ropa.style} height=${ropa.height}">
+            <img src= ${ropa.imagen} class="ropa2 card-img-top">
+        <div class="div-card">
+            <p class="card-text">${ropa.titulo} <br>${ropa.descripcion}<br>$${ropa.precio}</p>
+            <button id=${ropa.id} href="#">Comprar</button>
+        </div>
+        </article>
+    `;
     }
+    prendas.forEach(ropa => {
+        document.getElementById(`${ropa.id}`).addEventListener("click", function (){
+        agregarAlCarrito(ropa);
+    });
+})
 }
 
-stock();
+renderizarProductos();
 
-
-
-let salir= prompt ("Ingrese su talle nuevamente y le indicare su precio (Q para salir)").toUpperCase();
-
-while (salir!="Q" && salir!="q") {
-    switch (salir){
-        case "S":
-            alert ("El precio de la remera es de $1900");
-            break;
-        case "M":
-            alert ("El precio de la remera es de $2500");
-            break;
-        case "L":
-            alert ("El precio de la remera es de $2900");
-            break;
+function agregarAlCarrito(ropaComprada){
+    carrito.push(ropaComprada);
+    
+    Swal.fire({
+        title:'Prenda agregada al Carrito!!',
+        text: ropaComprada.titulo,
+        icon: 'success',
+        imageWidth: 200,
+        imageHeight: 120,
+        showConfirmButton: false,
+        timer: 1500,
+        background:"black",
+        color:"white",
         
-        case "XL":
-            alert ("El precio de la remera  es de $2400");
-            break;
-        default:
-            alert ("Ingrese un talle válido");
-            break;
-    }
-    salir= prompt ("Ingrese otro talle y le indicare su precio (Q para salir)").toUpperCase();
+    })
+    renderizarCarrito()
+    localStorage.setItem("carrito", JSON.stringify(carrito));
 }
 
-let remera = prompt ("Ingrese el nombre de la remera que desea comprar (Ropa 1, Ropa 2, Ropa 3, Ropa 4)").toLowerCase();
+const renderizarCarrito = () =>{
+    //vaciamos el carrito del html para que no se duplique
+    document.getElementById("tablabody").innerHTML="";
+    carrito.forEach(ropaComprada =>{
+        document.getElementById("tablabody").innerHTML += `
+        <tr>
+        <td class="td-comprar">${ropaComprada.id}</td>
+        <td class="td-comprar"> ${ropaComprada.titulo}</td>
+        <td class="td-comprar">$ ${ropaComprada.precio}</td>
+        <td class=td-boton><button class="btn btn-light" onclick="eliminar(event)">🗑️</button></td>
+        </tr>
+        `;
+    })
+    totalCarrito = carrito.reduce((acumulador, ropa)=> acumulador + ropa.precio,0);
+    document.getElementById("total").innerText = "Total a pagar: $"+totalCarrito;
+}
 
-const PrendaDisponible = [
-    {
-        nombre:"ropa 1",
-        precio: "$1900",
-        talle: "S",
-    },
-    {
-        nombre:"ropa 2",
-        precio: " $2500",
-        talle: "M",
-    },
-    {
-        nombre:"ropa 3",
-        precio: "$2900 ",
-        talle: "L",
-    },
-    {
-        nombre:"ropa 4",
-        precio: "$2400",
-        talle: "XL",
-    }
-];
+//llamamos a la funcion renderizarcarrito
+renderizarCarrito();
 
-const StockDisponible = PrendaDisponible.some((ropa) => ropa.nombre === remera.toLowerCase());
 
-if (StockDisponible == true) {
-    alert("Tenemos stock de la remera que elegiste");
-} else {
-    alert("Ingresaste una remera que no tenemos en stock");
+
+//boton para finalizar compra
+botonFinalizar.onclick = () =>{
+    if(carrito.length==0){
+        Swal.fire({
+            title:'El carrito esta Vacio',
+            icon: 'error',
+            showConfirmButton: false,
+            timer: 1500,
+            background:"black",
+            color:"white",
+            width: 400,
+        })
+    }else{
+        Swal.fire({
+            title:'¡¡Compra realizada!!',
+            icon:  'success',
+            showConfirmButton: false,
+            timer: 1500,
+            background:"black",
+            color:"white",
+            width: 450,
+        })
+    carrito = [];
+    document.getElementById("tablabody").innerHTML="";
+    document.getElementById("total").innerText = "Total a pagar: $";
+    //localStorage removeItem para vaciar el carrito cuando se finalice la compra y se vuelva a ingresar
+    localStorage.removeItem("carrito");
     
 }
+}
 
-PrendaDisponible.push ({nombre: "Proximamente", precio: "$4000", talle: "XXL"});
+//para eliminar productos del carrito 
+function eliminar(ev) {
+    let fila = ev.target.parentElement.parentElement;
+    let id = fila.children[0].innerText;
+    let indice = carrito.findIndex(ropa => ropa.id == id);
+    //remueve el producto del carro
+    carrito.splice(indice, 1);
+    //console.table(carrito);
+    //remueve la fila de la tabla
+    fila.remove();
+    //recalcular el total
+    let totalCarritoCalculado = carrito.reduce((acumulador, ropa) => acumulador + ropa.precio, 0);
+    total.innerText = "Total a pagar $: "+totalCarritoCalculado;
+    //storage
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+}
 
-console.log(PrendaDisponible);
