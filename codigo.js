@@ -10,8 +10,8 @@ let totalCarrito;
 function renderizarProductos() {
     for (const ropa of prendas) {
         contenedor.innerHTML += `
-        <article class="article-ropa2 card" style=${ropa.style} height=${ropa.height}">
-            <img src= ${ropa.imagen} class="ropa2 card-img-top">
+        <article class=${ropa.class} style=${ropa.style} height=${ropa.height}">
+            <img src= ${ropa.imagen} class=${ropa.imgclass}>
         <div class="div-card">
             <p class="card-text">${ropa.titulo} <br>${ropa.descripcion}<br>$${ropa.precio}</p>
             <button id=${ropa.id} href="#">Comprar</button>
@@ -53,11 +53,11 @@ const renderizarCarrito = () =>{
     document.getElementById("tablabody").innerHTML="";
     carrito.forEach(ropaComprada =>{
         document.getElementById("tablabody").innerHTML += `
-        <tr>
+        <tr class= "columnas">
         <td class="td-comprar">${ropaComprada.id}</td>
         <td class="td-comprar"> ${ropaComprada.titulo}</td>
         <td class="td-comprar">$ ${ropaComprada.precio}</td>
-        <td class=td-boton><button class="btn btn-light" onclick="eliminar(event)">🗑️</button></td>
+        <td><a class="btn btn-light" onclick="eliminar(event)">🗑️</a></td>
         </tr>
         `;
     })
