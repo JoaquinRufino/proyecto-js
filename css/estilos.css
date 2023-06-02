@@ -534,6 +534,7 @@ button:active {
                             "ropa"    
                             "ropa2";
     row-gap: 0px;
+    
 }
 
 .article-ropa1{
@@ -808,10 +809,10 @@ button:active {
         background-image: none;
         height: 50px;
         margin-right: 0px;
-      }
+    }
 
 
-      button {
+    button {
         --glow-color: rgb(217, 176, 255);
         --glow-spread-color: rgba(191, 123, 255, 0.781);
         --enhanced-glow-color: rgb(231, 206, 255);
@@ -833,7 +834,4 @@ button:active {
         position: relative;
         transition: all 0.3s;
     }
-    
-
-
 }

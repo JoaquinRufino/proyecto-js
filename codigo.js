@@ -1,7 +1,7 @@
 
 let productJSON= [];
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-
+let botonFinalizar = document.getElementById( "finalizar");
 
 fetch ("../product.json")
 .then(data => data.json())
@@ -14,7 +14,7 @@ fetch ("../product.json")
 
 let totalCarrito;
 let contenedor = document.getElementById("sectionropa");
-let botonFinalizar = document.getElementById("finalizar");
+
 
 function renderizarProductos() {
     for (const ropa of productJSON) {
@@ -76,10 +76,9 @@ const renderizarCarrito = () =>{
 renderizarCarrito();
 
 
-
 //boton para finalizar compra
-botonFinalizar.onclick = () =>{
-    if(carrito.length==0){
+botonFinalizar.addEventListener("click", function() {
+    if (carrito.length == 0){
         Swal.fire({
             title:'El carrito esta Vacio',
             icon: 'error',
@@ -104,9 +103,8 @@ botonFinalizar.onclick = () =>{
     document.getElementById("total").innerText = "Total a pagar: $";
     //localStorage removeItem para vaciar el carrito cuando se finalice la compra y se vuelva a ingresar
     localStorage.removeItem("carrito");
-    
 }
-}
+});
 
 //para eliminar productos del carrito 
 function eliminar(ev) {
