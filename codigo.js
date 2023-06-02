@@ -14,7 +14,7 @@ fetch ("../product.json")
 
 let totalCarrito;
 let contenedor = document.getElementById("sectionropa");
-
+let botonFinalizar = document.getElementById("finalizar");
 
 function renderizarProductos() {
     for (const ropa of productJSON) {
@@ -76,7 +76,7 @@ const renderizarCarrito = () =>{
 renderizarCarrito();
 
 
-let botonFinalizar = document.getElementById("finalizar");
+
 //boton para finalizar compra
 botonFinalizar.onclick = () =>{
     if(carrito.length==0){
