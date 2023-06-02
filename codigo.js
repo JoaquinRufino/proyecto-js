@@ -1,14 +1,23 @@
 
-
+let productJSON= [];
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-let contenedor = document.getElementById("sectionropa");
+
+
+fetch ("../product.json")
+.then(data => data.json())
+.then(json => {
+    productJSON = json
+    renderizarProductos()
+})
+
+
 
 let totalCarrito;
-
+let contenedor = document.getElementById("sectionropa");
 
 
 function renderizarProductos() {
-    for (const ropa of prendas) {
+    for (const ropa of productJSON) {
         contenedor.innerHTML += `
         <article class=${ropa.class} style=${ropa.style} height=${ropa.height}">
             <img src= ${ropa.imagen} class=${ropa.imgclass}>
@@ -19,15 +28,13 @@ function renderizarProductos() {
         </article>
     `;
     }
-    prendas.forEach(ropa => {
+    productJSON.forEach(ropa => {
         document.getElementById(`${ropa.id}`).addEventListener("click", function (){
         agregarAlCarrito(ropa);
         });
 });
 }
 
-
-renderizarProductos();
 
 
 function agregarAlCarrito(ropaComprada){

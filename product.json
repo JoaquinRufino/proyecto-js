@@ -1,4 +1,4 @@
-const prendas =[
+[
     {
         "imagen": "../asset/sintitulo-3.png",
         "imgclass": "ropa-1 card-img-top",
@@ -54,4 +54,4 @@ const prendas =[
         "height": "26rem" ,
         "id": "5"
     }
-];
+]
