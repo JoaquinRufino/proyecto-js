@@ -237,7 +237,7 @@ button:active {
     height: 250px;
     align-items: end;
     margin-bottom: 0px;
-    margin-bottom: 0px;
+    
 }
 
 .mover-copyright{
@@ -298,7 +298,7 @@ button:active {
         background-image: linear-gradient(#808080,#282a2c,rgb(14, 13, 13));
         width: 100%;
         text-align: center;
-        height: 150px;
+        height: 170px;
 }
 
 .copyright{
