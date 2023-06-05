@@ -1,7 +1,6 @@
 
 let productJSON= [];
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-let botonFinalizar = document.getElementById( "finalizar");
 
 fetch ("../product.json")
 .then(data => data.json())
@@ -14,6 +13,7 @@ fetch ("../product.json")
 
 let totalCarrito;
 let contenedor = document.getElementById("sectionropa");
+let botonFinalizar = document.getElementById( "finalizar");
 
 
 function renderizarProductos() {
