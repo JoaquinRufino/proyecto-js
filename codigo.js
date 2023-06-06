@@ -12,7 +12,7 @@ fetch ("../product.json")
 
 
 let totalCarrito;
-let contenedor = document.getElementById("sectionropa");
+let contenedor = document.getElementById("productos");
 let botonFinalizar = document.getElementById( "finalizar");
 
 
